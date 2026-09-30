@@ -1,0 +1,12 @@
+# Python is only for the analysis and asset tools. The render needs none of this: see README.md and AGENTS.md.
+# Versions unpinned; Python 3.10+. Each line says which tools import it.
+numpy              # all of them
+soundfile          # analysis/align-ctc.py, analysis/avs.py (so synth-spectrum.py and lead-voice.py)
+torch              # analysis/align-ctc.py
+torchaudio         # analysis/align-ctc.py (fetches WAV2VEC2_ASR_BASE_960H on first run)
+opencv-python      # assets/make-cutouts.py, roto/trace.py, tools/debrand.py, tools/prep-assets.py
+onnxruntime        # assets/make-cutouts.py (BiRefNet; the .onnx file is not in the repository: BIREFNET_ONNX=<path>)
+scipy              # roto/trace.py
+scikit-image       # roto/trace.py
+Pillow             # tools/contact-sheet.py, tools/face-box.py
+fonttools          # tools/cut-archivo.py
