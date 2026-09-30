@@ -2,7 +2,6 @@
 
 A 4:05 hardstyle music video about GPU and RAM prices, rendered frame by frame by a browser from JavaScript. No video editor, no After Effects, no stock footage: every frame is a pure function of the song's time, built from the song's own data (its kicks, its sung words, its stems) and drawn with Three.js and 2D canvases, then read straight off the canvas into ffmpeg.
 
-- **Watch:** YouTube `<link>` · X `<link>`
 - **Made by:** Bleak Freq (direction, song, character art, every note that turned a rebuild) and an AI coding agent (Claude, via Claude Code) that wrote the code to that direction over seven days in September 2026.
 
 ![style frames](docs/style-frames-v1.jpg)
