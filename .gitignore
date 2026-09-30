@@ -1,0 +1,18 @@
+node_modules/
+out/
+stills/
+roto/out/
+__pycache__/
+*.pyc
+# derived audio inputs, rebuilt from the stems by analysis/dump-stems.ps1
+*.f32
+analysis/whisper/*.wav
+analysis/whisper/*.log
+# the original photographs and their cutouts are not shipped (assets/photos/CREDITS.md lists every source)
+assets/photos/**/*.jpg
+assets/photos/**/*.png
+assets/gpu-cutouts/
+assets/ram-cutouts/
+assets/parts-cutouts/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OUT OF STOCK</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { display: block; width: 1920px; height: 1080px; }
+  /* ?play: the frame scaled to the window, a control strip under it */
+  body.preview { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: #050407; }
+  body.preview #stage, #bar { width: min(calc(100vw - 32px), calc((100vh - 96px) * 16 / 9)); }
+  body.preview #stage { height: auto; aspect-ratio: 16 / 9; }
+  #bar { display: flex; align-items: center; gap: 14px; font: 600 14px "Plex Mono", Consolas, monospace; color: #cfcad8; }
+  #bar button { font: inherit; font-size: 15px; width: 44px; height: 36px; border: 1px solid #3a3644; border-radius: 4px; background: #15131b; color: #f4f1ea; cursor: pointer; }
+  #bar button:hover:enabled { border-color: #ffb21e; }
+  #bar button:disabled { opacity: 0.4; cursor: default; }
+  #tc { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  #strip { flex: 1; min-width: 0; height: 44px; cursor: pointer; touch-action: none; }
+  #fps { width: 64px; text-align: right; color: #8f8b99; font-variant-numeric: tabular-nums; }
+</style>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+</head>
+<body>
+<script src="timing.js"></script>
+<script src="data/lyrics.js"></script>
+<script src="data/cutouts.js"></script>
+<script src="data/synth.js"></script>
+<script src="data/lead.js"></script>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>

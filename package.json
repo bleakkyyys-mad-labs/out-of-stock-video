@@ -1,0 +1,17 @@
+{
+  "name": "out-of-stock-video",
+  "version": "1.0.0",
+  "description": "OUT OF STOCK: a 4:05 music video drawn entirely in code (Three.js + 2D canvases, rendered headless, every frame a pure function of song time)",
+  "author": "Bleak Freq",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "serve": "node tools/serve.mjs 5630",
+    "determinism": "node tools/render.mjs determinism 12.9 57.3 104 140 196.2 224 241.7",
+    "video": "node tools/render.mjs video 0 245 out/out-of-stock.mp4"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}

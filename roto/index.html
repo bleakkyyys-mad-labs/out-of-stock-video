@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OOS roto</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0a0e; color: #9a96a6; font: 13px/1.4 "IBM Plex Mono", Consolas, monospace; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+  #roto { height: min(88vh, 92vw); width: auto; aspect-ratio: 1; display: block; box-shadow: 0 0 60px #000; }
+  #hud { white-space: pre; }
+  #keys { opacity: 0.6; }
+  body.render { display: block; }
+  body.render #roto { height: 1080px; width: 1080px; box-shadow: none; }
+  body.render #hud, body.render #keys { display: none; }
+</style>
+</head>
+<body>
+<canvas id="roto"></canvas>
+<div id="hud">loading…</div>
+<div id="keys">space play/pause · ←/→ step · S story on/off · free mode: F film/paper · R pencil · I ink · T tone · P look (cel/print)</div>
+<script type="module">
+  if (new URLSearchParams(location.search).has("render")) document.body.classList.add("render");
+  import("./roto.js").then(m => m.start()).catch(e => { document.getElementById("hud").textContent = "error: " + e.message; throw e; });
+</script>
+</body>
+</html>
