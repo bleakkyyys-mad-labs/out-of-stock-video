@@ -5,6 +5,7 @@
   "author": "Bleak Freq",
   "license": "MIT",
   "private": true,
+  "engines": { "node": ">=20" },
   "type": "commonjs",
   "scripts": {
     "serve": "node tools/serve.mjs 5630",

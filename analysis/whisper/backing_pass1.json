@@ -20,7 +20,7 @@
 		"ftype": 1
 	},
 	"params": {
-		"model": "X:\\STT\\MODELS\\ggml-large-v3.bin",
+		"model": "ggml-large-v3.bin",
 		"language": "en",
 		"translate": false
 	},

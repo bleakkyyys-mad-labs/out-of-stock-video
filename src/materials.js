@@ -150,8 +150,8 @@ export function building(o = {}) {
   });
 }
 
-// --- the spectrum bars (the intro, 9/27; the plugin's Visualizer): instanced boxes drawn as
-// wireframes (the plugin's outline mode: every face's edges, a faint fill), glowing past white so they bloom. Per bar:
+// --- the spectrum bars (the intro, 9/27; the reference visualizer): instanced boxes drawn as
+// wireframes (the reference's outline mode: every face's edges, a faint fill), glowing past white so they bloom. Per bar:
 // aVal = its band's value (brightness), aHue = where it sits on the cyan -> pink ramp, aHot = the spinner's lit segment
 export function specBars() {
   return new THREE.ShaderMaterial({

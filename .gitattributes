@@ -1,0 +1,2 @@
+# Normalise line endings on commit; checkout follows the platform. Binaries are detected by content.
+* text=auto

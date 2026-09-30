@@ -51,7 +51,7 @@ export function env(name, t) {
   return (a[i] + (a[i + 1] - a[i]) * (f - i)) / 255;
 }
 
-// --- the synth stem (analysis/synth-spectrum.py: the plugin's analyzer chain, precomputed per video frame) ---
+// --- the synth stem (analysis/synth-spectrum.py: the reference visualizer's analyzer chain, precomputed per video frame) ---
 const SY = window.OOS_SYNTH;
 const unb64 = s => Uint8Array.from(atob(s), ch => ch.charCodeAt(0));
 const SY_SHAPED = unb64(SY.shaped), SY_ENV = unb64(SY.env);

@@ -7,7 +7,7 @@ Source: Google Fonts, ofl/archivo (SIL Open Font License 1.1, (c) 2020 The Archi
   https://github.com/google/fonts/raw/main/ofl/archivo/Archivo-Italic%5Bwdth%2Cwght%5D.ttf
 The licence travels with the cuts as fonts/OFL-Archivo.txt.
 
-usage (the pixl env):  python tools/cut-archivo.py DIR_WITH_THE_TWO_VARIABLE_FILES
+usage (Python):  python tools/cut-archivo.py DIR_WITH_THE_TWO_VARIABLE_FILES
 """
 import sys, os
 from fontTools.ttLib import TTFont

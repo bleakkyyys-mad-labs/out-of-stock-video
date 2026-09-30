@@ -54,7 +54,7 @@ The instruments under the scenes are the reusable part:
 
 - **In:** the engine, the scenes as they shipped, the tools, the timing data, the prepared textures, the character art the video uses, the traced dance.
 - **Not in:** the song and its stems (Suno output, the creator's), the original photos and their cutouts (see `assets/photos/CREDITS.md` for every source; `analysis/dump-stems.ps1` and the prep scripts rebuild the derived files from the sources), the review sheets, and the rejected versions of verse 2 and the chorus that the video's history went through.
-- **Vocabulary in the comments:** "the creator" is the person who directed the video; "the agent" is the AI that wrote the code; "the director" is `director.js`; "the plugin" is the creator's Final Cut audio-visualizer plugin, whose analyzer the audio chain ports.
+- **Vocabulary in the comments:** "the creator" is the person who directed the video; "the agent" is the AI that wrote the code; "the director" is `director.js`; "the reference visualizer" is the audio-visualizer whose analyzer chain and look the intro's bars and the ring match.
 
 ## Licenses
 

@@ -115,7 +115,7 @@ export async function buildStage(renderer) {
   S.dots.frustumCulled = false; S.dots.visible = false; S.dots.renderOrder = 5;
   S.scene.add(S.dots);
 
-  // the intro (9/27): the plugin's Visualizer's ring of spectrum bars (96 = 48 bands mirrored) and the neon floor
+  // the intro (9/27): the reference visualizer's ring of spectrum bars (96 = 48 bands mirrored) and the neon floor
   const RING = 96, bgeo = new THREE.BoxGeometry(1, 1, 1);
   for (const a of ["aVal", "aHue", "aHot"]) bgeo.setAttribute(a, new THREE.InstancedBufferAttribute(new Float32Array(RING), 1));
   S.ring = new THREE.InstancedMesh(bgeo, specBars(), RING);

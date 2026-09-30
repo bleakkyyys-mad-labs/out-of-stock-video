@@ -1,15 +1,16 @@
 # Photo cutouts: BiRefNet-general (ONNX, MIT) mask -> guided-filter edge refine at full res
 # -> RGBA PNG cropped to the subject. Originals in photos/<set> are never touched.
 # A source that already carries real transparency keeps its own alpha (no model pass).
-# pixl env. Runs on CPU: the env's CPU onnxruntime shadows onnxruntime-gpu (providers = Azure, CPU).
+# Python env. Runs on CPU: the env's CPU onnxruntime shadows onnxruntime-gpu (providers = Azure, CPU).
 #   python make-cutouts.py [gpu|ram|parts] [prefix ...]   (default gpu; prefixes = only those files)
+#   The model: BIREFNET_ONNX=<path to BiRefNet-general-epoch_244.onnx>, or the file beside this script.
 import os, sys, time
 import numpy as np
 import cv2
 import onnxruntime as ort
 
-MODEL = r"X:\AI_LLM\MODELS\SEGMENTATION\BiRefNet-general-epoch_244.onnx"
 HERE = os.path.dirname(os.path.abspath(__file__))
+MODEL = os.environ.get("BIREFNET_ONNX", os.path.join(HERE, "BiRefNet-general-epoch_244.onnx"))
 SET = sys.argv[1] if len(sys.argv) > 1 else "gpu"
 SRC, DST = os.path.join(HERE, "photos", SET), os.path.join(HERE, SET + "-cutouts")
 SKIP = {                           # full-frame photos: no clean cutout, they stay whole

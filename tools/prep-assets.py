@@ -1,4 +1,4 @@
-# Engine-side assets from the cutouts and the alignment (pixl env):
+# Engine-side assets from the cutouts and the alignment (Python):
 #   assets/tex/<key>.png  - cutouts at 2048 px wide (plenty for 1080p; keeps GPU memory sane)
 #   assets/tex/<key>.jpg  - full-frame photos (the backgrounds), 2048 px wide, no alpha
 #   data/cutouts.js       - window.OOS_CUTOUTS: key, texture, aspect, outline polygon (0..1 uv, y down)

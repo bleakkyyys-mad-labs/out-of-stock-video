@@ -3,14 +3,14 @@
 // The creator's new stem, the synth, answers the store's countdown three times, louder, brighter and longer each time. That is
 // the spine: THE STORE TALKS, THE INTERNET ANSWERS.
 //   cold open    black, a watcher typing, the card a shape in the dark, until the synth's first note
-//   answer 1     the card lights up inside the plugin's Visualizer's ring, the neon floor, the camera flies; you mash NOTIFY ME
+//   answer 1     the card lights up inside the reference visualizer's ring, the neon floor, the camera flies; you mash NOTIFY ME
 //   countdown 1  the store's voice: the numerals slam, the ring shrinks to a loading spinner; on "one" the restock goes live
 //   answer 2     the bots: every note buys some, the stock drains to SOLD OUT, the queue climbs
 //   countdown 2  the same, glitched; after "one", nothing happens (a black card, fastcut.js)
 //   answer 3     it tips over: the synth's notes cut between this room at full tilt and the fast cut's cards
 //   countdown 3  the held RESTOCK and one card per numeral (fastcut.js), straight into "Step one"
-// The card itself is the plugin's Effector: it scales, turns, flickers colour and splits RGB in depth with the synth. The ring
-// is the plugin's Visualizer: 48 bands mirrored around an ellipse, bars as wireframe boxes (data/synth.js = the plugin's analyzer).
+// The card itself is the reference's card effect: it scales, turns, flickers colour and splits RGB in depth with the synth. The ring
+// is the reference visualizer: 48 bands mirrored around an ellipse, bars as wireframe boxes (data/synth.js = the reference's analyzer).
 // Every time comes from the song's data (the words, the synth's spans and notes). A pure function of t.
 import * as THREE from "three";
 import * as song from "./song.js";
@@ -71,7 +71,7 @@ function phaseAt(t) {
 
 // ---------- the world ----------
 const CARD = [0, 0.15, 0], CARD_H = 2.3, RING_Z = -1.3, FLOOR_Y = -2.5;
-const RING_BIG = [3.5, 2.05], RING_SMALL = [2.85, 1.5];        // answers: the Visualizer's ellipse; countdowns: the spinner
+const RING_BIG = [3.5, 2.05], RING_SMALL = [2.85, 1.5];        // answers: the visualizer's ellipse; countdowns: the spinner
 const NUM_AT = [-4.7, -1.8, 0.8];                              // the countdown numerals, left of the card
 const BUF = new Float32Array(48);
 const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _p = new THREE.Vector3(), _s = new THREE.Vector3(), _z = new THREE.Vector3(0, 0, 1);
@@ -82,8 +82,8 @@ function notePulse(t) {
   return on && t - on.t < 1 ? { on, p: Math.exp(-(t - on.t) / 0.09) * (0.55 + 0.45 * on.s) } : { on: null, p: 0 };
 }
 
-// the plugin's Visualizer's ring: 96 bars on an ellipse around the card, each band mirrored left/right (bass at the top),
-// each bar a wireframe box standing on the ellipse along its normal (the plugin's "align angle")
+// the reference visualizer's ring: 96 bars on an ellipse around the card, each band mirrored left/right (bass at the top),
+// each bar a wireframe box standing on the ellipse along its normal (as the reference aligns them)
 function ring(S, t, o) {
   const R = S.ring, N = R.count, half = N / 2, [rx, ry] = o.radii, B = o.bands;
   const aV = R.geometry.attributes.aVal, aH = R.geometry.attributes.aHue, aX = R.geometry.attributes.aHot;
@@ -121,7 +121,7 @@ function floor(S, t, gain, pulse) {
   U.gain.value = gain; U.pulse.value = pulse; U.scroll.value = scrollAt(t); U.center.value.set(CARD[0], CARD[2]); U.fade.value = 10;
 }
 
-// the card as the plugin's Effector: base print settings (the old intro's), plus what the synth does to it
+// the card as the reference's card effect: base print settings (the old intro's), plus what the synth does to it
 const CARD_INK = { invert: 1, ink: 0xece6da, inkGain: 1.6, pitch: 64, contrast: 2.3, gain: -0.1, outline: 0.9, detail: 0.35 };
 const FLICKER = [0x5ef2ff, 0xff3d8b, 0xffb21e];
 function effectorCard(S, t, fx) {
@@ -129,7 +129,7 @@ function effectorCard(S, t, fx) {
   const main = place(S.cards.rtx3090, pos, [0, fx.ry ?? 0, fx.rz], h, {
     ...CARD_INK, ink: fx.ink ?? CARD_INK.ink, inkGain: fx.inkGain ?? 1.6, spot: fx.spot ?? [0.52, 1.25, 1.35, 1], pump: fx.pump ?? 0, dissolve: fx.dissolve ?? 0, seed: 1, order: 2,
   });
-  if (fx.shift > 0.002) {                                        // the RGB shift, in depth (the plugin's Z-shift)
+  if (fx.shift > 0.002) {                                        // the RGB shift, in depth (the reference's depth shift)
     const dx = Math.cos(fx.dir) * fx.shift, dy = Math.sin(fx.dir) * fx.shift * 0.6;
     [[S.storm[0], 0xff2a3d, 1], [S.storm[6], 0x35d6f0, -1]].forEach(([m, ink, sg]) => place(m, [pos[0] + dx * sg, pos[1] + dy * sg, pos[2] - 0.12 - (sg > 0 ? 0 : 0.1)], [0, fx.ry ?? 0, fx.rz], h, {
       ...CARD_INK, ink, inkGain: 1.9, spot: fx.spot ?? [0.52, 1.25, 1.35, 1], pump: fx.pump ?? 0, opacity: clamp(fx.shift * 5) * 0.7, order: 1,
@@ -138,7 +138,7 @@ function effectorCard(S, t, fx) {
   return main;
 }
 
-// sparks thrown off the ring on the notes (the Visualizer's particles): S.dots, billboards
+// sparks thrown off the ring on the notes (the visualizer's particles): S.dots, billboards
 function sparks(S, t, k, col) {
   const D = S.dots, al = D.geometry.attributes.aAlpha, [rx, ry] = RING_BIG, per = 10 + k * 10;
   D.visible = true; D.material.uniforms.color.value.set(col); D.material.uniforms.gain.value = 2.2;
@@ -355,7 +355,7 @@ function room(t, S) {
     const jolt = on ? p * 0.1 * aura : 0, jx = on ? (h32(on.i, 1401) - 0.5) * jolt : 0, jy = on ? (h32(on.i, 1402) - 0.5) * jolt : 0;
     camera(S, [look[0] + Math.sin(th) * Math.cos(el) * d + jx, look[1] + Math.sin(el) * d + 0.3 + jy, look[2] + Math.cos(th) * Math.cos(el) * d], look,
       k === 2 ? 0.09 * Math.sin(u * 2.3) : 0.02 * Math.sin(u), 35 + (1 - slamIn) * 9 - p * 3 * aura);
-    // the card, the plugin's Effector: scale, turn, colour flicker, RGB split in depth
+    // the card, the reference's card effect: scale, turn, colour flicker, RGB split in depth
     const flick = on && p > 0.55 && h32(on.i, 1102) < 0.25 + 0.35 * aura;
     effectorCard(S, t, {
       scale: 1 + 0.05 * e + 0.08 * p * aura, rz: -0.05 + 0.04 * Math.sin(t * 1.7) * e + (on ? (h32(on.i, 1101) - 0.5) * 0.09 * p : 0),

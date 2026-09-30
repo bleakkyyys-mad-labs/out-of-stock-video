@@ -784,7 +784,7 @@ function stream(c, K, o = {}) {
   }
   c.restore();
 }
-// the plugin's Visualizer's ring (the intro's), as a ring light: 48 bands mirrored, bars along the normal, fed by the creator's synth stem
+// the reference visualizer's ring (the intro's), as a ring light: 48 bands mirrored, bars along the normal, fed by the creator's synth stem
 function ringLight(c, K, cx, cy, r) {
   const B = song.synth.bandsAt(K.t), n = 96, k = K.k;
   for (let i = 0; i < n; i++) {

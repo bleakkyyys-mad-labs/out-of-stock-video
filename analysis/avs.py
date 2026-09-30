@@ -1,14 +1,14 @@
-# The analyzer chain of the creator's Final Cut audio-visualizer plugin, as functions any stem
+# The analyzer chain of the reference audio visualizer (the one the intro's bars and the ring match), as functions any stem
 # can go through. Moved verbatim out of synth-spectrum.py (9/27) when the lead vocal needed the same chain;
 # synth-spectrum.py's output is byte-identical through it (checked by md5 at the move).
 #
-# The spectrum: a Hamming-windowed FFT, magnitudes / fftSize, bands with the plugin's inverse-loudness gain and empty-band
+# The spectrum: a Hamming-windowed FFT, magnitudes / fftSize, bands with the reference's inverse-loudness gain and empty-band
 # interpolation, attack/decay smoothing on the magnitudes, then dB -> noise floor / max -> gamma = the "shaped" value
-# the plugin's bars use. Two changes, both on the plugin's doc's own future-work list: LOGARITHMIC bands (the plugin's doc: "Future enhancement:
-# logarithmic binning"), and stereo averaged (the creator's reads the left channel only). Precomputed per video frame, so every
+# the reference's bars use. Two changes from the reference: LOGARITHMIC bands (it bins linearly), and stereo averaged
+# (it reads the left channel only). Precomputed per video frame, so every
 # frame of the render is a pure function of time (a live analyser can't be).
 #
-# Also here: the pitch of a voice (YIN), which the plugin's analyzer never had.
+# Also here: the pitch of a voice (YIN), which the reference's analyzer never had.
 import base64
 import numpy as np
 import soundfile as sf
@@ -31,7 +31,7 @@ class Framer:
 
 
 def loud_gain(f):
-    """the plugin's inverse-loudness gain at a band's centre frequency"""
+    """the reference's inverse-loudness gain at a band's centre frequency"""
     if f < 200: return 0.1 + 0.4 * f / 200                      # heavy bass attenuation
     if f < 2000: return 0.5 + 0.5 * (f - 200) / 1800             # up to the ear's reference
     return 1.0 + 2.0 * min(1.0, (f - 2000) / 18000)             # a moderate lift in the highs
@@ -53,10 +53,10 @@ def band_spectrum(fr, nfr, fps, bands=48, f_lo=90.0, f_hi=16000.0, attack=0.0, d
         spec = np.abs(np.fft.rfft(fr.at(ts, n_fft, win), axis=1)).astype(np.float32) / n_fft
         for b, m in enumerate(members):
             if len(m): mags[s:s + len(ts), b] = spec[:, m].mean(axis=1)
-            else:      # an empty band (a log band narrower than a bin): the spectrum read at its centre (the plugin's interpolation)
+            else:      # an empty band (a log band narrower than a bin): the spectrum read at its centre (the reference's interpolation)
                 mags[s:s + len(ts), b] = np.array([np.interp(centre[b], freqs, row) for row in spec])
     mags *= gain
-    # attack / decay on the magnitudes, frame to frame (the plugin's semantics: new = prev + (cur - prev) * (1 - k); 0 = instant)
+    # attack / decay on the magnitudes, frame to frame (the reference's semantics: new = prev + (cur - prev) * (1 - k); 0 = instant)
     sm = np.zeros_like(mags)
     prev = np.zeros(bands, np.float32)
     for i in range(nfr):
